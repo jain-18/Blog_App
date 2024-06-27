@@ -32,13 +32,15 @@
                             </button>
                         </mat-chip-row>
 
-                        <input type="text" placeholder="New Tag.."
-                        [matChipInputFor]="chipGrid"
-                        (matChipInputTokenEnd)="add($event)">
+                        <input type="text" placeholder="New Tag.." [matChipInputFor]="chipGrid"
+                            (matChipInputTokenEnd)="add($event)">
                     </mat-chip-grid>
                 </mat-form-field>
 
-                <button mat-raised-button color="primary" style="float: right;" [disabled]="!postForm.valid"> Create New Post</button>
+                <button mat-raised-button color="primary" style="float: right;" 
+                [disabled]="!postForm.valid" (click)="createPost()">
+                    Create New Post
+                </button>
             </form>
         </div>
     </mat-card-content>
