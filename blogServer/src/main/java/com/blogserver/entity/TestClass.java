@@ -7,5 +7,5 @@ import jakarta.persistence.Id;
 public class TestClass {
     @Id
     private Long id;
-    
+
 }
