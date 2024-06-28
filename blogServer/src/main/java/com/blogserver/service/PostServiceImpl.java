@@ -2,11 +2,13 @@ package com.blogserver.service;
 
 import com.blogserver.entity.Post;
 import com.blogserver.repository.PostRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -23,5 +25,15 @@ public class PostServiceImpl implements PostService{
 
     public List<Post> getAllPosts(){
         return postRepository.findAll();
+    }
+
+    public Post getPostById(Long postId){
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if(optionalPost.isPresent()){
+            Post post = optionalPost.get();
+            post.setViewCount(post.getViewCount() + 1);
+            return postRepository.save(post);
+        }else {
+            throw new EntityNotFoundException("Post not found");        }
     }
 }
