@@ -31,4 +31,13 @@ export class ViewPostComponent {
       this.matSnackBar.open('Error in getting post', 'OK')
     })})
   }
+
+  likePost(){
+    this.postService.likePost(this.postId).subscribe({next : (res)=>{
+      this.matSnackBar.open("Post Liked Successfully","Ok");
+      this.getPostById();
+    },error : (error)=>{
+      this.matSnackBar.open('Error in liking post', 'OK');
+    }})
+  }
 }

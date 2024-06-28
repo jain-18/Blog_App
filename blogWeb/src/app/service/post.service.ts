@@ -22,4 +22,8 @@ export class PostService {
   getPostById(postId : number):Observable<any>{
     return this.http.get(BASIC_URL + `api/posts/${postId}`);
   }
+
+  likePost(postId : number):Observable<any>{
+    return this.http.put(BASIC_URL + `api/posts/${postId}/like`,{});
+  }
 }
