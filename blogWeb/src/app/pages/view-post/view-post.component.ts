@@ -15,6 +15,7 @@ export class ViewPostComponent {
 
   postId = this.activatedRoute.snapshot.params['id'];
   postData : any;
+  comments : any;
 
   commentForm !: FormGroup;
 
@@ -27,6 +28,7 @@ export class ViewPostComponent {
 
   ngOnInit(){
     this.getPostById();
+    // this.getCommentsByPost();
     
     this.commentForm = this.fb.group({
       postedBy : [null,Validators.required],
@@ -39,9 +41,18 @@ export class ViewPostComponent {
     const content = this.commentForm.get('content')?.value;
 
     this.commentService.createComment(this.postId, postedBy, content).subscribe({next : (res)=>{
-      this.matSnackBar.open('Comment published successfully', 'OK');
+    this.matSnackBar.open('Comment published successfully', 'OK');
+      this.getCommentsByPost();
     },error : (error)=>{
       this.matSnackBar.open('Error publishing comment', 'OK');
+    }})
+  }
+
+  getCommentsByPost(){
+    this.commentService.getAllCommentsByPost(this.postId).subscribe({next : (res)=>{
+      this.comments = res;
+    },error : (error)=>{
+      this.matSnackBar.open('Error fetching comments', 'OK');
     }})
   }
 
@@ -49,6 +60,7 @@ export class ViewPostComponent {
     this.postService.getPostById(this.postId).subscribe({next : (res)=>{
       this.postData = res;
       console.log(res);
+      this.getCommentsByPost();
     },error : (error=>{
       this.matSnackBar.open('Error in getting post', 'OK')
     })})
