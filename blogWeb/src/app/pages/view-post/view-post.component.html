@@ -19,4 +19,25 @@
         <button mat-raised-button color="primary" style="margin-left: 5px;">{{postData.viewCount}}<mat-icon>remove_red_eye</mat-icon></button>
     </mat-card-actions>
     </mat-card>
+
+    <mat-card class="comment-card">
+        <mat-card-content>
+            <h4>Publish Your Comment</h4>
+            <div>
+                <form [formGroup]="commentForm">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Content</mat-label>
+                        <textarea matInput formControlName="content"></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Posted By</mat-label>
+                        <input matInput formControlName="postedBy">
+                    </mat-form-field>
+
+                    <button mat-raised-button color="primary" (click)="publishComment()" style="float: right;" [disabled]="!commentForm.valid">Publish Comment</button>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>
